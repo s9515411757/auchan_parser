@@ -42,7 +42,7 @@ class AuchanParse:
         Args:
             url (str): Ссылка на каталог.
             pages (int): Кол-во страниц.
-            coutry (str): Город.
+            country_mapping (dict): Город.
 
         """
         self.url = url
@@ -122,7 +122,7 @@ class AuchanParse:
                     )
                 }
             )
-            print(self.data_json[-1])
+            print(f"Кол-во: [{len(self.data_json)}] | Добавляем запись: {self.data_json[-1]}")
 
     def get_data_json(self):
         """
@@ -136,8 +136,8 @@ class AuchanParse:
         Проходим по страницам сайта.
 
         """
-        for country_id in self.country_mapping.values():
-            print(country_id)
+        for country_name, country_id in self.country_mapping.items():
+            print(f"Парсим город: {country_name}")
             self.cookies['region_id'] = country_id
             for page in range(1, self.pages + 1):
                 self.params['page'] = page
@@ -164,7 +164,7 @@ class AuchanParse:
 
 def main():
     url = 'https://www.auchan.ru/catalog/sobstvennye-marki-ashan/'
-    pages = 1
+    pages = 2
     country_mapping = {
         'Москва': '1',
         'Санкт-Петербург': '2'
